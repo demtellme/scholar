@@ -1,0 +1,9 @@
+[project]
+name = "scholar"
+version = "0.1.0"
+description = "CLI revision tool to alnalyse exams"
+authors = [{name = "Alex G"}]
+requires-python = ">=3"
+
+[project.scripts]
+scholar = "scholar:main"
