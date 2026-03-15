@@ -1,6 +1,6 @@
 [project]
 name = "scholar"
-version = "0.1.1"
+version = "0.1.2"
 description = "CLI revision tool to alnalyse exams"
 authors = [{name = "Alex G"}]
 requires-python = ">=3"

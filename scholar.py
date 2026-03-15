@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import sys
 import os
-
-FILE = "examslog.txt"
+import datetime
+FILE = os.path.join(os.path.dirname(__file__), "examslog.txt")
 
 def logtest():
     mark = 0
@@ -20,9 +20,8 @@ def logtest():
     www = input("What went well in the test: ").replace("-", ",")
     ebi = input("What could be improved from this test: ").replace("-", ",")
 
-
-    with open(FILE, "a+") as f:
-        f.write(f"{subject}-{name}-{mark} / {totalforpaper}-good:{www}-improve:{ebi}")
+    time = datetime.datetime.now().strftime("%Y-%m-%d")
+    open(FILE, "a+").write(f"{subject}-{name}-{mark} / {totalforpaper}-good:{www}-improve:{ebi}-{time}\n")
     print(f"{subject} {name} logged")
 
 def settarget():
@@ -41,15 +40,20 @@ def settarget():
         subj = lineparts[0]
 
         if subjtotgt == subj.lower():
-            open(filetoaddto, "a+").write(lineparts[4])
-            print(f"In paper one you could do better in {lineparts[4]}, added to {filetoaddto}")
-
-
+            if lineparts[4].strip() not in open(filetoaddto).read().splitlines():
+                open(filetoaddto, "a+").write(lineparts[4].strip() + "\n")
+            print(f"In {lineparts[0]}, {lineparts[1]} you could do better in {lineparts[4].strip()}, added to {filetoaddto}")
 
 def feedback():
     lines = open(FILE, "r").readlines()
+    cutoff = datetime.datetime.now() - datetime.timedelta(weeks=1)
     for line in lines:
         lineparts = line.split("-")
+        if len(lineparts) < 6:
+            continue
+        date = datetime.datetime.strptime(lineparts[5].strip(), "%Y-%m-%d")
+        if date < cutoff:
+            continue
         print(f"In {lineparts[0]}, {lineparts[1]} you got {lineparts[2]}, you did well in {lineparts[3]}, you should study up on {lineparts[4]}")
 
 
