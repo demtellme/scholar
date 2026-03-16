@@ -28,8 +28,8 @@ def settarget():
     lines = open(FILE, "r").readlines()
     homedir = os.path.expanduser("~")
 
-    if os.path.isfile(os.path.join(homedir, ".todolist.txt")):
-        filetoaddto = os.path.join(homedir, ".todolist.txt")
+    if os.path.isfile(f"{homedir}/todo/todo/.todolist.txt"):
+        filetoaddto =  f"{homedir}/todo/todo/.todolist.txt"
     else:
         filetoaddto = "scholartgts.txt"
 
@@ -41,7 +41,7 @@ def settarget():
 
         if subjtotgt == subj.lower():
             if lineparts[4].strip() not in open(filetoaddto).read().splitlines():
-                open(filetoaddto, "a+").write(lineparts[4].strip() + "\n")
+                open(filetoaddto, "a+").write(f"In {lineparts[0]}, {lineparts[1]} you should {lineparts[4].strip()}\n")
             print(f"In {lineparts[0]}, {lineparts[1]} you could do better in {lineparts[4].strip()}, added to {filetoaddto}")
 
 def feedback():
